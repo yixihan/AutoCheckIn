@@ -1,0 +1,30 @@
+http_pool:
+  max_total: 200
+  default_max_per_route: 100
+  connect_timeout: 5000
+  connection_request_timeout: 1000
+  socket_timeout: 65000
+  validate_after_inactivity: 2000
+
+
+cookie:
+  cordCloud:
+    cookie: cf_chl_2=26b90c2f306ed17; cf_chl_prog=x14; cf_clearance=5HOD1zLkbtUHOnMC.x1XcW7zYN5oW2JsRjMVVV8IKzc-1663219922-0-150; crisp-client%2Fsession%2Ff24e0785-07d5-4a5f-961b-bde1c9b6245b=session_443239ee-7cc6-4a92-a614-6fdd0badb190; uid=131898; email=3113788997%40qq.com; key=b558626a2f247a5833379a53eabc02dba419498c122bc; ip=b6a888706bb63a3dabb9b5e8fbb44764; expire_in=1663826060
+    url: https://cordcloud.biz/user/checkin
+    isChecked: true
+  email: 3113788997@qq.com
+
+#邮件发送配置
+spring:
+  mail:
+    username: 3113788997@qq.com
+    password: uxjifzhywwspdgff
+
+    host: smtp.qq.com
+    # 开启加密授权验证
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable:
+              true
