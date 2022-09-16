@@ -4,8 +4,6 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.Email;
-
 /**
  * @author : yixihan
  * @create : 2022-09-15-13:55
@@ -15,24 +13,21 @@ import javax.validation.constraints.Email;
 public class CookieData {
 
     /**
-     * cordCloud Cookie
+     * cordCloud 登录接口
      */
-    @Value ("${cookie.cordCloud.cookie}")
-    private String cordCloudCookie;
+    @Value("${cookie.cordCloud.login}")
+    private String cordCloudLogin;
 
     /**
-     * 是否开启 cordCloud 自动签到
+     * cordCloud 签到接口
      */
-    @Value ("${cookie.cordCloud.isChecked}")
-    private Boolean cordCloudFlag;
+    @Value("${cookie.cordCloud.checkIn}")
+    private String cordCloudCheckIn;
 
     /**
-     * cordCloud 自动签到 url
+     * cordCloud 用户信息存入 redis 时使用的 key
      */
-    @Value ("${cookie.cordCloud.url}")
-    private String cordCloudUrl;
+    @Value("${cookie.cordCloud.name}")
+    private String cordCloudName = "cordCloud";
 
-    @Email
-    @Value ("${cookie.email}")
-    private String email;
 }

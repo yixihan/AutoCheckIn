@@ -1,7 +1,7 @@
 package com.yixihan.controller;
 
-import com.yixihan.pojo.CookieData;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -19,12 +19,15 @@ import javax.mail.internet.MimeMessage;
 public class MailSendController {
 
     @Resource
-    private CookieData cookieData;
-
-    @Resource
     private JavaMailSenderImpl mailSender;
 
-    public void sendMail (String message) {
+    /**
+     * 邮件发送者
+     */
+    @Value ("${spring.mail.username}")
+    private String sendEmail;
+
+    public void sendMail (String message, String email) {
         try {
             // 创建一个复杂的文件
             MimeMessage mailMessage = mailSender.createMimeMessage ();
@@ -32,13 +35,13 @@ public class MailSendController {
             // 组装邮件
             MimeMessageHelper helper = new MimeMessageHelper(mailMessage,true,"utf-8");
 
-            helper.setSubject("你好");
+            helper.setSubject("您好");
             helper.setText(message,true);
 
             // 收件人
-            helper.setTo(cookieData.getEmail ());
+            helper.setTo(email);
             // 发件人
-            helper.setFrom("3113788997@qq.com");
+            helper.setFrom(sendEmail);
 
             // 发送
             mailSender.send(mailMessage);

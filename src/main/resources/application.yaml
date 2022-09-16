@@ -1,25 +1,21 @@
-http_pool:
-  max_total: 200
-  default_max_per_route: 100
-  connect_timeout: 5000
-  connection_request_timeout: 1000
-  socket_timeout: 65000
-  validate_after_inactivity: 2000
+server:
+  port: 9999
+  max-http-header-size: 102400
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    threads:
+      # Tomcat启动初始化的线程数，默认值25
+      min-spare: 30
+      # tomcat最大线程数，默认为200
+      max: 800
 
 
-cookie:
-  cordCloud:
-    cookie: cf_chl_2=26b90c2f306ed17; cf_chl_prog=x14; cf_clearance=5HOD1zLkbtUHOnMC.x1XcW7zYN5oW2JsRjMVVV8IKzc-1663219922-0-150; crisp-client%2Fsession%2Ff24e0785-07d5-4a5f-961b-bde1c9b6245b=session_443239ee-7cc6-4a92-a614-6fdd0badb190; uid=131898; email=3113788997%40qq.com; key=b558626a2f247a5833379a53eabc02dba419498c122bc; ip=b6a888706bb63a3dabb9b5e8fbb44764; expire_in=1663826060
-    url: https://cordcloud.biz/user/checkin
-    isChecked: true
-  email: 3113788997@qq.com
-
-#邮件发送配置
 spring:
+  #邮件发送配置
   mail:
-    username: 3113788997@qq.com
-    password: uxjifzhywwspdgff
-
+    username: email
+    password: password
     host: smtp.qq.com
     # 开启加密授权验证
     properties:
@@ -28,3 +24,24 @@ spring:
           ssl:
             enable:
               true
+
+  # redis 配置
+  redis:
+    port: 6379
+    host: localhost
+    database: 14
+    password: password
+
+  #时间戳统一转换
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: GMT+8
+
+
+# 自动签到接口
+cookie:
+  # cordCloud
+  cordCloud:
+    name: cordCloud
+    checkIn: https://cordcloud.biz/user/checkin
+    login: https://www.c-cloud.xyz/auth/login
