@@ -37,14 +37,17 @@ public class AutoCheck {
     private RedisTemplate<String, Object> redisTemplate;
 
 
-    @Scheduled(cron = "15 * * * * ?")
+    @Scheduled(cron = "0 1 0 * * ?")
     public void autoCheckInCordCloud() {
         Map<Object, Object> map = redisTemplate.opsForHash ().entries (cookieData.getCordCloudName ());
 
         for (Map.Entry<Object, Object> entry : map.entrySet ()) {
             CordCloud cordCloud = (CordCloud) entry.getValue ();
+            log.info ("用户 " + cordCloud.getIsSendEmail () + " 是否已开启自动签到 : " + cordCloud.getIsCheckIn ());
             if (cordCloud.getIsCheckIn ()) {
+                log.info ("开始自动签到用户 " + cordCloud.getSendEmail () + " ...");
                 checkInCordCloud (cordCloud);
+                log.info ("用户 " + cordCloud.getSendEmail () + " 自动签到完成...");
             }
         }
     }
