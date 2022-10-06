@@ -27,7 +27,7 @@ public class MailSendController {
     @Value ("${spring.mail.username}")
     private String sendEmail;
 
-    public void sendMail (String message, String email) {
+    public void sendMail (String message, String email, String title) {
         try {
             // 创建一个复杂的文件
             MimeMessage mailMessage = mailSender.createMimeMessage ();
@@ -35,7 +35,7 @@ public class MailSendController {
             // 组装邮件
             MimeMessageHelper helper = new MimeMessageHelper(mailMessage,true,"utf-8");
 
-            helper.setSubject("您好");
+            helper.setSubject("小易自动签到");
             helper.setText(message,true);
 
             // 收件人

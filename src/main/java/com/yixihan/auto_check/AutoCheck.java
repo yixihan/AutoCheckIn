@@ -65,13 +65,13 @@ public class AutoCheck {
             String message = msg.getInt ("ret") == 0 ? msg.getStr ("msg") : buildEmailMessage (msg);
             log.info (message);
             if (cordCloud.getIsSendEmail ()) {
-                mailSendController.sendMail (message, cordCloud.getSendEmail ());
+                mailSendController.sendMail (message, cordCloud.getSendEmail (), cookieData.getCordCloudName ());
                 log.info ("邮件发送成功");
             }
         } else {
             log.warning ("签到失败!");
             log.warning (msg.getStr ("msg"));
-            mailSendController.sendMail ("cordCloud 自动签到签到失败, 失败原因 : " + msg.getStr ("msg"), cordCloud.getSendEmail ());
+            mailSendController.sendMail ("自动签到签到失败, 失败原因 : " + msg.getStr ("msg"), cordCloud.getSendEmail (), cookieData.getCordCloudName ());
         }
     }
 
@@ -108,7 +108,7 @@ public class AutoCheck {
             } else {
                 log.warning ("登录失败!");
                 log.warning (msg.getMsg ());
-                mailSendController.sendMail ("cordCloud 自动签到登录失败, 失败原因 : " + msg.getMsg (), cordCloud.getSendEmail ());
+                mailSendController.sendMail ("自动签到登录失败, 失败原因 : " + msg.getMsg (), cordCloud.getSendEmail (), cookieData.getCordCloudName ());
                 throw new RuntimeException ("cordCloud 自动签到登录失败, 失败原因 : " + msg.getMsg ());
             }
         } else {

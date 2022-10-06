@@ -99,7 +99,7 @@ public class LoginTest {
         String message = msg.getInt ("ret") == 0 ? msg.getStr ("msg") : buildEmailMessage (msg);
         log.info (message);
 
-        mailSendController.sendMail (message, "3113788997@qq.com");
+        mailSendController.sendMail (message, "3113788997@qq.com", "test");
         log.info ("邮件发送成功");
 
     }
