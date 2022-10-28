@@ -43,7 +43,7 @@ public class AutoCheck {
 
         for (Map.Entry<Object, Object> entry : map.entrySet ()) {
             CordCloud cordCloud = (CordCloud) entry.getValue ();
-            log.info ("用户 " + cordCloud.getIsSendEmail () + " 是否已开启自动签到 : " + cordCloud.getIsCheckIn ());
+            log.info ("用户 " + cordCloud.getUser ().getEmail () + " 是否已开启自动签到 : " + cordCloud.getIsCheckIn ());
             if (cordCloud.getIsCheckIn ()) {
                 log.info ("开始自动签到用户 " + cordCloud.getSendEmail () + " ...");
                 checkInCordCloud (cordCloud);
