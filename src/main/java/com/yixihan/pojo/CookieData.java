@@ -30,4 +30,10 @@ public class CookieData {
     @Value("${cookie.cordCloud.name}")
     private String cordCloudName = "cordCloud";
 
+    /**
+     * cordCloud 用户信息存入 redis 时使用的 key
+     */
+    @Value("${cookie.newhope.name}")
+    private String newhopeName = "newhope";
+
 }

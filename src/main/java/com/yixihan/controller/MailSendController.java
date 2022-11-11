@@ -2,6 +2,7 @@ package com.yixihan.controller;
 
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.Nullable;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -27,7 +28,7 @@ public class MailSendController {
     @Value ("${spring.mail.username}")
     private String sendEmail;
 
-    public void sendMail (String message, String email, String title) {
+    public void sendMail (String message, String email, @Nullable String title) {
         try {
             // 创建一个复杂的文件
             MimeMessage mailMessage = mailSender.createMimeMessage ();
