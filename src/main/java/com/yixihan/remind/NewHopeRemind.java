@@ -103,21 +103,26 @@ public class NewHopeRemind {
                 NewHopeData newhope = (NewHopeData) entry.getValue ();
                 while (newhope.getRemindCnt () < MAX_REMIND) {
                     newhope = (NewHopeData) redisTemplate.opsForHash ().get (cookieData.getNewhopeName (), newhope.getEmail ());
+                    if (newhope == null) {
+                        ThreadUtil.waitForDie ();
+                        return;
+                    }
                     log.info ("用户 " + newhope.getEmail () + " 是否已开启自动提醒 : " + newhope.getAutoRemindFlag ());
                     if (newhope.getRemind ()) {
                         log.info ("用户 " + newhope.getEmail () + " 已经收到提醒");
+                        ThreadUtil.waitForDie ();
                         return;
                     }
                     if (newhope.getAutoRemindFlag ()
                             && !newhope.getRemind ()
                             && (CollectionUtil.contains (newhope.getSendTime (), hour) || hour == -1)
                             && newhope.getRemindCnt () < MAX_REMIND) {
-                        log.info ("第 " + (newhope.getRemindCnt () + 1) + " 提醒用户 " + newhope.getEmail () + " 打卡...");
+                        log.info ("第 " + (newhope.getRemindCnt () + 1) + " 次提醒用户 " + newhope.getEmail () + " 打卡...");
                         autoRemind (newhope);
                         newhope.setRemindCnt (newhope.getRemindCnt () + 1);
                         log.info ("第 " + newhope.getRemindCnt () + " 提醒用户 " + newhope.getEmail () + " 打卡成功");
                         redisTemplate.opsForHash ().put (cookieData.getNewhopeName (), newhope.getEmail (), newhope);
-                        ThreadUtil.sleep (5, TimeUnit.MINUTES);
+                        ThreadUtil.sleep (newhope.getRemindWait (), TimeUnit.MINUTES);
                     }
                 }
             });
@@ -128,12 +133,15 @@ public class NewHopeRemind {
     private void reset() {
         Map<Object, Object> map = redisTemplate.opsForHash ().entries (cookieData.getNewhopeName ());
 
+        log.info ("开始清除提醒痕迹");
         for (Map.Entry<Object, Object> entry : map.entrySet ()) {
             NewHopeData newhope = (NewHopeData) entry.getValue ();
             newhope.setRemind (false);
             newhope.setRemindCnt (0);
             redisTemplate.opsForHash ().put (cookieData.getNewhopeName (), newhope.getEmail (), newhope);
+            log.info ("用户 {} 提醒痕迹清除完毕", newhope.getEmail ());
         }
+        log.info ("提醒痕迹清除完毕");
     }
 
     /**

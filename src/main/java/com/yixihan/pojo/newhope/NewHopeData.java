@@ -48,4 +48,6 @@ public class NewHopeData {
      */
     private Integer remindCnt;
 
+    private Integer remindWait;
+
 }

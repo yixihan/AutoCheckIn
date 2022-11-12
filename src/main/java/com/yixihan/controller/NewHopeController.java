@@ -56,6 +56,7 @@ public class NewHopeController {
         if (newhope != null) {
             newhope.setRemind (flag);
             redisTemplate.opsForHash ().put (cookieData.getNewhopeName (), email, newhope);
+            log.info ("打卡成功 : {}", redisTemplate.opsForHash ().get (cookieData.getNewhopeName (), email));
             return Result.success ("恭喜你打卡成功!");
         } else {
             return Result.fail ("未知账号!");
