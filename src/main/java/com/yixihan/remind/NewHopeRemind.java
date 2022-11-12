@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import javax.annotation.Resource;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -97,7 +98,7 @@ public class NewHopeRemind {
      */
     private void startAutoRemind(int hour) {
         Map<Object, Object> map = redisTemplate.opsForHash ().entries (cookieData.getNewhopeName ());
-
+        log.info ("现在时间为 ：{}， 开始提醒用户打卡", new Date ());
         for (Map.Entry<Object, Object> entry : map.entrySet ()) {
             executor.execute (() -> {
                 NewHopeData newhope = (NewHopeData) entry.getValue ();
