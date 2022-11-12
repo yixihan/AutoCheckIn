@@ -45,4 +45,6 @@ cookie:
     name: cordCloud
     checkIn: https://cordcloud.biz/user/checkin
     login: https://www.c-cloud.xyz/auth/login
+  newhope:
+    name: newhope
 
