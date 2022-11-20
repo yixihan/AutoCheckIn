@@ -1,0 +1,38 @@
+spring:
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr: localhost:8848
+        namespace: autocheck
+      config:
+        server-addr: localhost:8848
+        namespace: autocheck
+        file-extension: yaml
+        extension-configs:
+          - data-id: autocheck-cordcloud-dev.yaml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: autocheck-common-dev.yaml
+            group: DEFAULT_GROUP
+            refresh: true
+
+# 示例配置，将这些配置添加进nacos配置文件中
+# autocheck-cordcloud-dev.yaml
+# cordCloud
+#cordCloud:
+#  name: cordCloud
+#  checkIn: https://cordcloud.biz/user/checkin
+#  login: https://www.c-cloud.xyz/auth/login
+
+# autocheck-common-dev.yaml
+#autocheck:
+#  redis:
+#    host: localhost
+#    port: 6379
+#    password: password
+#    database: 10
+#  email:
+#    username: username
+#    password: password

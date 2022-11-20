@@ -1,0 +1,18 @@
+server:
+  port: 12100
+  max-http-header-size: 102400
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    threads:
+      # Tomcat启动初始化的线程数，默认值25
+      min-spare: 30
+      # tomcat最大线程数，默认为200
+      max: 800
+
+
+spring:
+  application:
+    name: auto-check-in
+  profiles:
+    active: dev

@@ -32,6 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 
-application.yaml
+bootstrap-dev.yaml
 *.log
 log
