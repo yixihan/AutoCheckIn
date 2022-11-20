@@ -1,0 +1,32 @@
+spring:
+  #邮件发送配置
+  mail:
+    username: ${autocheck.email.username}
+    password: ${autocheck.email.password}
+    host: smtp.qq.com
+    # 开启加密授权验证
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable:
+              true
+
+  # redis 配置
+  redis:
+    port: ${autocheck.redis.port}
+    host: ${autocheck.redis.host}
+    database: ${autocheck.redis.database}
+    password: ${autocheck.redis.password}
+
+  #时间戳统一转换
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: GMT+8
+
+logging:
+  file:
+    path: log/
+    name: log/auto-checkIn.log
+    max-size: 10MB
+

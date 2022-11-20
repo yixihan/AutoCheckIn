@@ -15,25 +15,18 @@ public class CookieData {
     /**
      * cordCloud 登录接口
      */
-    @Value("${cookie.cordCloud.login}")
+    @Value("${cordCloud.login}")
     private String cordCloudLogin;
 
     /**
      * cordCloud 签到接口
      */
-    @Value("${cookie.cordCloud.checkIn}")
+    @Value("${cordCloud.checkIn}")
     private String cordCloudCheckIn;
 
     /**
      * cordCloud 用户信息存入 redis 时使用的 key
      */
-    @Value("${cookie.cordCloud.name}")
+    @Value("${cordCloud.name}")
     private String cordCloudName = "cordCloud";
-
-    /**
-     * cordCloud 用户信息存入 redis 时使用的 key
-     */
-    @Value("${cookie.newhope.name}")
-    private String newhopeName = "newhope";
-
 }
