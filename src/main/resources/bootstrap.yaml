@@ -1,5 +1,5 @@
 server:
-  port: 12100
+  port: 9999
   max-http-header-size: 102400
   tomcat:
     # tomcat的URI编码

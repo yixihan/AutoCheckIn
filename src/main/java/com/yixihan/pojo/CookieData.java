@@ -29,4 +29,10 @@ public class CookieData {
      */
     @Value("${cordCloud.name}")
     private String cordCloudName = "cordCloud";
+
+    @Value("${cordCloud.avg-cnt-name}")
+    private String cordCloudAvgCntName;
+
+    @Value("${cordCloud.avg-sum-name}")
+    private String cordCloudAvgSumName;
 }

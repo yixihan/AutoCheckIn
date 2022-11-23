@@ -1,5 +1,7 @@
 package com.yixihan;
 
+import cn.hutool.core.util.NumberUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONObject;
@@ -12,8 +14,10 @@ import com.yixihan.util.StringUtils;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.net.HttpCookie;
 import java.util.List;
 
@@ -30,6 +34,9 @@ public class LoginTest {
 
     @Resource
     private MailSendController mailSendController;
+
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
 
     @Test
@@ -113,5 +120,32 @@ public class LoginTest {
         sb.append ("过去已用流量 : ").append (trafficInfo.getStr ("lastUsedTraffic")).append ("\n");
         sb.append ("剩余流量 : ").append (trafficInfo.getStr ("unUsedTraffic"));
         return sb.toString ();
+    }
+
+    @Test
+    public void testAvg () {
+        String str = StringUtils.decodeUnicode ("\u83b7\u5f97\u4e86 438MB \u6d41\u91cf.");
+        StringBuilder sb = new StringBuilder ();
+        for (char c : str.toCharArray ()) {
+            if (c >= '0' && c <= '9') {
+                sb.append (c);
+            }
+        }
+        String cordCloudAvgCnt = StrUtil.toStringOrNull (redisTemplate.opsForValue ().get (cookieData.getCordCloudAvgCntName ()));
+        double cnt = cordCloudAvgCnt == null ? 0 : Double.parseDouble (cordCloudAvgCnt);
+        String cordCloudAvgSum = StrUtil.toStringOrNull (redisTemplate.opsForValue ().get (cookieData.getCordCloudAvgSumName ()));
+        double sum = cordCloudAvgSum == null ? 0 : Double.parseDouble (cordCloudAvgSum);
+        System.out.println (cnt);
+        System.out.println (sum);
+        double avg = NumberUtil.div (sum, cnt);
+        System.out.println ("thisSum : " + sb);
+        System.out.println ("avg : " + avg);
+        double thisSum = Integer.parseInt (sb.toString ());
+        cnt++;
+        sum += thisSum;
+        BigDecimal percentage = NumberUtil.round (NumberUtil.mul (NumberUtil.div (thisSum, avg), 100), 2);
+        redisTemplate.opsForValue ().set (cookieData.getCordCloudAvgCntName (), cnt);
+        redisTemplate.opsForValue ().set (cookieData.getCordCloudAvgSumName (), sum);
+        System.out.println ("本次签到获得流量是平均签到流量的 " + percentage + "%");
     }
 }
